@@ -21,9 +21,7 @@ jobs:
           path: NetworkingProjectOriginal
       - name: Copy test files
         run: |
-          ls
           mv -f NetworkingProjectOriginal/test/* test/
-          ls
           ls test
 
       - name: Parse instances IP address
