@@ -19,9 +19,9 @@ jobs:
           repository: alonitac/NetworkingProject
           ref: main
           path: /originalrepo
-          run: |
-            cp /originalrepo/test ./test
-            ls test
+      - name: Copy test file
+        run: |
+          mv -f /originalrepo/test test
       
 
       - name: Parse instances IP address
