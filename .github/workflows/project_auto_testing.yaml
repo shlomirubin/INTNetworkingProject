@@ -21,13 +21,8 @@ jobs:
           path: .originalrepo
       - name: Copy test files
         run: |
-          rm -r test
-          ls
           mv -f .originalrepo/test test
-          rm -f -r .originalrepo
-          ls -la
           ls test
-
 
       - name: Parse instances IP address
         id: parse_ip
