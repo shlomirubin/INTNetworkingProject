@@ -12,13 +12,13 @@ jobs:
     env:
       PUBLIC_INSTANCE_SSH_KEY: ${{ secrets.PUBLIC_INSTANCE_SSH_KEY }}
     steps:
+      - uses: actions/checkout@v2
       - name: Checkout Test files
         uses: actions/checkout@v2
         with:
           repository: alonitac/LinuxProject
           ref: main
           path: NetworkingProjectOriginal
-      - uses: actions/checkout@v2
       - name: Copy test files
         run: |
           ls
