@@ -18,11 +18,12 @@ jobs:
         with:
           repository: alonitac/NetworkingProject
           ref: main
-          path: /originalrepo
-      - name: Copy test file
+          path: .originalrepo
+      - name: Copy test files
         run: |
-          mv -f /originalrepo/test test
-      
+          mv -f .originalrepo/test test
+          rm -f -r .originalrepo
+
 
       - name: Parse instances IP address
         id: parse_ip
