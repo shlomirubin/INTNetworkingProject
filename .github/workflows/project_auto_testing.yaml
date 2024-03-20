@@ -17,12 +17,13 @@ jobs:
         with:
           repository: alonitac/LinuxProject
           ref: main
-          path: $GITHUB_WORKSPACE/NetworkingProjectOriginal
+          path: ${{ github.workspace }}/NetworkingProjectOriginal
       - uses: actions/checkout@v2
       - name: Copy test files
         run: |
           rm -f -r test
-          mv -f $GITHUB_WORKSPACE/NetworkingProjectOriginal/test test
+          mv -f ${{ github.workspace }}/NetworkingProjectOriginal/test test
+          rm -f -r ${{ github.workspace }}/NetworkingProjectOriginal
           ls test
 
       - name: Parse instances IP address
