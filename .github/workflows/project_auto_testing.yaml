@@ -21,7 +21,7 @@ jobs:
       - uses: actions/checkout@v2
       - name: Copy test files
         run: |
-          rsync -av --ignore-existing NetworkingProjectOriginal/test test/
+          mv -f NetworkingProjectOriginal/test/* test/
           ls
           ls test
 
