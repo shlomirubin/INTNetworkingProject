@@ -15,8 +15,9 @@ jobs:
       - uses: actions/checkout@v2
       - name: Test authenticity verification
         run: |
-          HASH=$(find test -type f -exec cat {} + | md5sum)
-          test ${HASH:0:32} = "80951fa008b54261c5dc385987aefb04" || (echo "You project can not be tested. It seems that the \"test\" directory, which contains the testing scripts, has been modified. To resolve this, you can restore the original files from the original project repo: https://github.com/alonitac/NetworkingProject.git" && exit 1)
+          HASH=$(tar cf - test | sha256sum)
+          echo $HASH
+          test ${HASH:0:64} = "12df587d43beae68294e982de8c6b6b3ebe747b9eb9835bfc88ab716b685f273" || (echo "You project can not be tested. It seems that the \"test\" directory, which contains the testing scripts, has been modified. To resolve this, you can restore the original files from the original project repo: https://github.com/alonitac/NetworkingProject.git" && exit 1)
 
       - name: Parse instances IP address
         id: parse_ip
