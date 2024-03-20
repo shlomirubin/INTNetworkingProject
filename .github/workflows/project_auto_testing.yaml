@@ -13,16 +13,12 @@ jobs:
       PUBLIC_INSTANCE_SSH_KEY: ${{ secrets.PUBLIC_INSTANCE_SSH_KEY }}
     steps:
       - uses: actions/checkout@v2
-      - name: Checkout Test files
-        uses: actions/checkout@v2
+      - uses: actions/checkout@v2
         with:
           repository: alonitac/NetworkingProject
-          ref: main
           path: NetworkingProjectOriginal
       - name: Copy test files
-        run: |
-          mv -f NetworkingProjectOriginal/test/* test/
-
+        run: mv -f NetworkingProjectOriginal/test/* test/
       - name: Parse instances IP address
         id: parse_ip
         run: |
@@ -76,6 +72,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+      - uses: actions/checkout@v2
+        with:
+          repository: alonitac/NetworkingProject
+          path: NetworkingProjectOriginal
+      - name: Copy test files
+        run: mv -f NetworkingProjectOriginal/test/* test/
       - uses: actions/setup-python@v1
       - uses: BSFishy/pip-action@v1
         with:
