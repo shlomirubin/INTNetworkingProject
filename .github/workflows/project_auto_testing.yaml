@@ -21,7 +21,9 @@ jobs:
           path: .originalrepo
       - name: Copy test files
         run: |
-          mv -fT .originalrepo/test test
+          rm -r test
+          ls
+          mv -f .originalrepo/test test
           rm -f -r .originalrepo
           ls -la
           ls test
