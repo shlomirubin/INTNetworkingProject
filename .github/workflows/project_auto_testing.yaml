@@ -12,18 +12,17 @@ jobs:
     env:
       PUBLIC_INSTANCE_SSH_KEY: ${{ secrets.PUBLIC_INSTANCE_SSH_KEY }}
     steps:
-      - uses: actions/checkout@v2
       - name: Checkout Test files
         uses: actions/checkout@v2
         with:
-          repository: alonitac/NetworkingProject
+          repository: alonitac/LinuxProject
           ref: main
-          path: .originalrepo
+          path: $GITHUB_WORKSPACE/NetworkingProjectOriginal
+      - uses: actions/checkout@v2
       - name: Copy test files
         run: |
           rm -f -r test
-          mv -f .originalrepo/test test
-          pwd
+          mv -f $GITHUB_WORKSPACE/NetworkingProjectOriginal/test test
           ls test
 
       - name: Parse instances IP address
