@@ -23,7 +23,6 @@ jobs:
         run: |
           rm -f -r test
           mv -f .originalrepo/test test
-          ls test
 
       - name: Parse instances IP address
         id: parse_ip
