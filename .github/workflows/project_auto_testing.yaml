@@ -1,0 +1,87 @@
+name: Project auto-testing
+on:
+  push:
+    branches:
+      - main
+
+permissions: {}
+
+jobs:
+  NetworkingProjectTestBastionAndRotation:
+    runs-on: ubuntu-latest
+    env:
+      PUBLIC_INSTANCE_SSH_KEY: ${{ secrets.PUBLIC_INSTANCE_SSH_KEY }}
+    steps:
+      - uses: actions/checkout@v2
+      - name: Test authenticity verification
+        run: |
+          HASH=$(find test -type f -exec cat {} + | md5sum)
+          test ${HASH:0:32} = "80951fa008b54261c5dc385987aefb04" || (echo "You project can not be tested. It seems that the \"test\" directory, which contains the testing scripts, has been modified. To resolve this, you can restore the original files from the original project repo: https://github.com/alonitac/NetworkingProject.git" && exit 1)
+
+      - name: Parse instances IP address
+        id: parse_ip
+        run: |
+          mkdir -p ~/.ssh
+          cp test/ssh_config ~/.ssh/config
+                  
+          PUBLIC_IP=$(jq -r '.public_instance_ip' ec2_instances.json)
+          echo "Public IP value: $PUBLIC_IP"
+          if ! [[ "$PUBLIC_IP" =~ [0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3} ]]; then
+            echo "The value provided for public_instance_ip in ec2_instances.json is not a valid IPv4 address"
+            exit 1
+          fi
+          
+          PRIVATE_IP=$(jq -r '.private_instance_ip' ec2_instances.json)
+          echo "Private IP value: $PRIVATE_IP"
+          if ! [[ $PRIVATE_IP =~ 10\.0\.1\.[0-9]{1,3} ]]; then
+            echo "The value provided for private_instance_ip in ec2_instances.json is not a valid IPv4 address or does not belong to 10.0.1.0/24 which is the private subnet CIDR"
+            exit 1
+          fi
+          
+          if [[ -n "$PUBLIC_INSTANCE_SSH_KEY" ]]; then
+              echo "$PUBLIC_INSTANCE_SSH_KEY" > private_key
+              chmod 400 private_key
+          
+              if ! ssh-keygen -y -f private_key &>/dev/null; then
+                  echo "The SSH private key provided in PUBLIC_INSTANCE_SSH_KEY is invalid."
+                  exit 1
+              fi
+          else
+              echo "The PUBLIC_INSTANCE_SSH_KEY secret content is empty. Please read carefully the submission guidelines."
+              exit 1
+          fi
+          
+          echo "PUBLIC_IP=$PUBLIC_IP" >> "$GITHUB_OUTPUT"
+          echo "PRIVATE_IP=$PRIVATE_IP" >> "$GITHUB_OUTPUT"
+
+      - name: Test Bastion Connect
+        run: |
+          export PUBLIC_IP=${{ steps.parse_ip.outputs.PUBLIC_IP }}
+          export PRIVATE_IP=${{ steps.parse_ip.outputs.PRIVATE_IP }}
+          
+          bash test/test_bastion.sh
+      - name: SSH Keys Rotation
+        run: |
+          export PUBLIC_IP=${{ steps.parse_ip.outputs.PUBLIC_IP }}
+          export PRIVATE_IP=${{ steps.parse_ip.outputs.PRIVATE_IP }}
+          
+          bash test/test_rotation.sh
+
+  NetworkingProjectTestTLSHandshake:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-python@v1
+      - uses: BSFishy/pip-action@v1
+        with:
+          packages: |
+            aiohttp
+      - name: TLS Handshake - Getting Eve certificate
+        run: |
+          bash test/test_tls.sh eve
+      - name: TLS Handshake - Bad client test message encryption
+        run: |
+          bash test/test_tls.sh bad-msg
+      - name: TLS Handshake - Full handshake process
+        run: |
+          bash test/test_tls.sh
