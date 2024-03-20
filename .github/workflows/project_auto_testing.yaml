@@ -16,13 +16,15 @@ jobs:
       - name: Checkout Test files
         uses: actions/checkout@v2
         with:
-          repository: alonitac/NetworkingProject
+          repository: alonitac/LinuxProject
           ref: main
           path: .originalrepo
       - name: Copy test files
         run: |
-          mv -f .originalrepo/test test
+          mv -fT .originalrepo/test test
           rm -f -r .originalrepo
+          ls -la
+          ls test
 
 
       - name: Parse instances IP address
