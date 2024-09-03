@@ -1,26 +1,36 @@
 Local DNS Server IP
 -------------------
-<ip-here>
-
-
+127.0.0.53
 
 Default gateway IP
 -------------------
-<ip-here>
-
-
+10.0.0.1
 
 DHCP IP allocation sys-logs
 -------------------
-<logs-here>
-
+2024-08-20T17:02:25.453264+00:00 ip-10-0-0-59 dhcpcd[432]: enX0: offered 10.0.0.59 from 10.0.0.1
+2024-08-20T17:02:25.453267+00:00 ip-10-0-0-59 dhcpcd[432]: enX0: leased 10.0.0.59 for 3600 seconds
+2024-08-20T17:02:25.453269+00:00 ip-10-0-0-59 dhcpcd[432]: enX0: adding route to 10.0.0.0/24
+2024-08-20T17:02:25.453271+00:00 ip-10-0-0-59 dhcpcd[432]: enX0: adding default route via 10.0.0.1
+2024-08-21T05:15:27.272076+00:00 ip-10-0-0-59 dhcpcd[425]: enX0: offered 10.0.0.59 from 10.0.0.1
+2024-08-21T05:15:27.272079+00:00 ip-10-0-0-59 dhcpcd[425]: enX0: leased 10.0.0.59 for 3600 seconds
+2024-08-21T05:15:27.272081+00:00 ip-10-0-0-59 dhcpcd[425]: enX0: adding route to 10.0.0.0/24
+2024-08-21T05:15:27.272084+00:00 ip-10-0-0-59 dhcpcd[425]: enX0: adding default route via 10.0.0.1
+2024-08-23T08:46:33.161953+00:00 ip-10-0-0-59 dhcpcd[427]: enX0: offered 10.0.0.59 from 10.0.0.1
+2024-08-23T08:46:33.161956+00:00 ip-10-0-0-59 dhcpcd[427]: enX0: leased 10.0.0.59 for 3600 seconds
+2024-08-23T08:46:33.161958+00:00 ip-10-0-0-59 dhcpcd[427]: enX0: adding route to 10.0.0.0/24
+2024-08-23T08:46:33.161962+00:00 ip-10-0-0-59 dhcpcd[427]: enX0: adding default route via 10.0.0.1
+2024-08-27T15:48:45.443313+00:00 ip-10-0-0-59 dhcpcd[425]: enX0: offered 10.0.0.59 from 10.0.0.1
+2024-08-27T15:48:45.443319+00:00 ip-10-0-0-59 dhcpcd[425]: enX0: leased 10.0.0.59 for 3600 seconds
+2024-08-27T15:48:45.443322+00:00 ip-10-0-0-59 dhcpcd[425]: enX0: adding route to 10.0.0.0/24
+2024-08-27T15:48:45.443326+00:00 ip-10-0-0-59 dhcpcd[425]: enX0: adding default route via 10.0.0.1
 
 
 Public to private num of hops
 -------------------
-<answer-here>
+2
 
 
 DNS queries from the private instance
 -------------------
-<answer-here>
+Yes via Route53. 
