@@ -12,6 +12,7 @@ if [ $# -lt 1 ]; then
   exit 5
 fi
 
+
 PUBLIC_IP=$1
 
 # Case 2: Connect to the public instance
