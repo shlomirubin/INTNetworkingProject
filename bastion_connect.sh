@@ -5,7 +5,7 @@ if [ -z "$KEY_PATH" ]; then
   echo "KEY_PATH env var is expected"
   exit 5
 fi
-
+ 
 # Check if any IP is provided
 if [ $# -lt 1 ]; then
   echo "please provide an IP address"
