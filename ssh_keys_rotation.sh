@@ -14,6 +14,7 @@ PUB_KEY_PATH=~/.ssh/${NEW_KEY_NAME}.pub
 # Step 1: Create a new pair of keys
 ssh-keygen -t rsa -b 2048 -f ~/.ssh/$NEW_KEY_NAME -q -N ""
 
+
 # Step 2: Copy the public key to the private instance
 scp $PUB_KEY_PATH ubuntu@"$PRIVATE_IP":/home/ubuntu/
 
