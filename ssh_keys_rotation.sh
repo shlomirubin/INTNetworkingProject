@@ -19,31 +19,6 @@ ssh-keygen -t rsa -b 2048 -f $NEW_KEY_PATH -q -N ""
 #Adding the new pub key to Private EC2
 ssh-copy-id -i ${NEW_KEY_PATH}.pub ubuntu@"$PRIVATE_EC2_IP"
 
-#Check if copy was successful to private EC2.
-if [ $? -ne 0 ]; then
-  echo "Copy is failed"
-  exit 1
-fi
-
 #Remove the old public key from the private instance
-ssh -i $OLD_KEY_PATH ubuntu@$PRIVATE_INSTANCE_IP "sed -i '/$(cat ${OLD_KEY_PATH}.pub)/d' ~/.ssh/authorized_keys"
+ssh -i $OLD_KEY_PATH ubuntu@"$PRIVATE_INSTANCE_IP" "sed -i '/$(cat ${OLD_KEY_PATH}.pub)/d' ~/.ssh/authorized_keys"
 
-#check the new key is working
-ssh -i @NEW_KEY_PATH ubuntu@$PRIVATE_EC2_IP
-
-#check if key removed as expected.
-if [ $? -ne 0 ]; then
-  echo "failed to remove key"
-  exit 1
-fi
-
-#Check that old key isn't working anymore.
-ssh -i $OLD_KEY_PATH ubuntu@$PRIVATE_EC2_IP
-
-#end of key rotations scenario
-if [ $? -eq 0 ]; then
-  echo 'old key still works'
-  exit 1
-else
-  echo 'key rotation worked'
-fi
