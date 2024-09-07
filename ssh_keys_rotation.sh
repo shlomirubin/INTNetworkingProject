@@ -19,7 +19,7 @@ echo "New SSH key pair generated: ~/.ssh/${NEW_KEY_NAME} and ~/.ssh/${KEY_NAME}.
 ssh-copy-id -i ~/.ssh/${NEW_KEY_NAME}.pub ubuntu@"$PRIVATE_IP"
 
 # Step 3: Remove the old public key from the private instance
-OLD_KEY=$(cat ~/.ssh/id_rsa.pub)  # Assuming id_rsa is the old key
+export OLD_KEY=$(cat ~/.ssh/id_rsa.pub)  # Assuming id_rsa is the old key
 
 ssh ubuntu@"$PRIVATE_IP" "sed -i '/$OLD_KEY/d' ~/.ssh/authorized_keys"
 echo "Old SSH key removed from the private instance."
