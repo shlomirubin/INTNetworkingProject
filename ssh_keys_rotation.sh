@@ -8,6 +8,8 @@ fi
 
 PRIVATE_EC2_IP=$1
 
+export KEY_PATH=/home/ubuntu/.ssh/SRubinKeyPrivate.pem
+
 #logging to public EC2
 ssh -i "KEY_PATH" Ubuntu@"PRIVATE_EC2_IP"
 
