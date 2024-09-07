@@ -8,7 +8,7 @@ fi
 
 PRIVATE_IP=$1
 NEW_KEY_NAME="RotatedKey"
-KEY_PATH=$HOME/.ssh/SRubinKeys
+KEY_PATH=$HOME/.ssh/SRubinKeyPrivate.pem
 
 # Step 1: Create a new pair of keys
 ssh-keygen -t rsa -b 2048 -f ~/.ssh/$NEW_KEY_NAME -q -N ""
