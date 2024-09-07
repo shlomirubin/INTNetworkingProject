@@ -8,11 +8,6 @@ fi
 
 PRIVATE_EC2_IP=$1
 
-export KEY_PATH=/home/ubuntu/.ssh/SRubinKeyPrivate.pem
-
-#logging to public EC2
-ssh -i "KEY_PATH" Ubuntu@"PRIVATE_EC2_IP"
-
 #Dedine so valuables for key rotation
 NEW_KEY_NAME="new_key"
 NEW_KEY_PATH="$HOME/.ssh/$NEW_KEY_NAME"
@@ -24,7 +19,7 @@ ssh-keygen -t rsa -b 2048 -f $NEW_KEY_PATH -q -N ""
 #Adding the new pub key to Private EC2
 ssh-copy-id -i ${NEW_KEY_PATH}.pub ubuntu@"$PRIVATE_EC2_IP"
 
-#Check if copy was succsful to private EC2.
+#Check if copy was successful to private EC2.
 if [ $? -ne 0 ]; then
   echo "Copy is failed"
   exit 1
