@@ -6,19 +6,30 @@ if [ $# -ne 1 ]; then
     exit 5
 fi
 
-PRIVATE_EC2_IP=$1
+PRIVATE_IP=$1
 
 #Dedine so valuables for key rotation
-NEW_KEY_NAME="new_key"
-NEW_KEY_PATH="$HOME/.ssh/$NEW_KEY_NAME"
-OLD_KEY_PATH="$HOME/.ssh/SRubinPrivateKey.pem"
+NEW_KEY_NAME="RotatedKey"
 
 #Creating a new pair keys1
-ssh-keygen -t rsa -b 2048 -f $NEW_KEY_PATH -q -N ""
+ssh-keygen -t rsa -b 2048 -f ~/.ssh/$NEW_KEY_NAME -q -N ""
+echo "New SSH key pair generated: ~/.ssh/${NEW_KEY_NAME} and ~/.ssh/${KEY_NAME}.pub"
 
-#Adding the new pub key to Private EC2
-ssh-copy-id -i ${NEW_KEY_PATH}.pub ubuntu@"$PRIVATE_EC2_IP"
+# Copy the new public key to the private instance's authorized_keys
+ssh-copy-id -i ~/.ssh/${NEW_KEY_NAME}.pub ubuntu@"$PRIVATE_IP"
 
-#Remove the old public key from the private instance
-ssh -i $OLD_KEY_PATH ubuntu@"$PRIVATE_INSTANCE_IP" "sed -i '/$(cat ${OLD_KEY_PATH}.pub)/d' ~/.ssh/authorized_keys"
+# Step 3: Remove the old public key from the private instance
+OLD_KEY=$(cat ~/.ssh/id_rsa.pub)  # Assuming id_rsa is the old key
 
+ssh ubuntu@"$PRIVATE_IP" "sed -i '/$OLD_KEY/d' ~/.ssh/authorized_keys"
+echo "Old SSH key removed from the private instance."
+
+# Step 4: Test connection with the new key
+ssh -i ~/.ssh/${NEW_KEY_NAME} ubuntu@"$PRIVATE_IP" "echo 'Successfully connected with the new key!'"
+
+# Step 5: Test connection with the old key (should fail)
+if ssh -i ~/.ssh/id_rsa ubuntu@"$PRIVATE_IP"; then
+  echo "Error: Old key still works! Rotation failed."
+else
+  echo "Old key no longer works. Key rotation successful."
+fi
