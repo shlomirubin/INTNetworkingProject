@@ -1,11 +1,12 @@
 #!/bin/bash
 
+
 # Check if KEY_PATH environment variable is set
 if [ -z "$KEY_PATH" ]; then
   echo "KEY_PATH env var is expected"
   exit 5
 fi
- 
+
 # Check if any IP is provided
 if [ $# -lt 1 ]; then
   echo "please provide an IP address"
@@ -33,4 +34,3 @@ if [ $# -ge 2 ]; then
   fi
   exit $?
 fi
-

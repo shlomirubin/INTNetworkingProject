@@ -8,6 +8,7 @@ fi
 
 PRIVATE_EC2_IP=$1
 
+
 #Dedine so valuables for key rotation
 NEW_KEY_NAME="new_key"
 NEW_KEY_PATH="$HOME/.ssh/$NEW_KEY_NAME"
