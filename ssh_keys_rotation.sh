@@ -18,6 +18,7 @@ ssh-keygen -t rsa -b 2048 -f ~/.ssh/$NEW_KEY_NAME -q -N ""
 # Step 2: Copy the public key to the private instance
 scp -i "$KEY_PATH2" "$PUB_KEY_PATH" ubuntu@"$PRIVATE_IP":/home/ubuntu/
 
+
 # Append the new public key to the authorized_keys file
 ssh -i $KEY_PATH2 ubuntu@"$PRIVATE_IP" "cat /home/ubuntu/$(basename $PUB_KEY_PATH) >> ~/.ssh/authorized_keys && rm /home/ubuntu/$(basename $PUB_KEY_PATH)"
 
