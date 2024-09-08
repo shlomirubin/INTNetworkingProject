@@ -27,3 +27,4 @@ OLD_KEY=$(ssh -i $KEY_PATH ubuntu@"$PRIVATE_IP" "cat ~/.ssh/authorized_keys")
 
 # Remove the old public key from the private instance
 ssh -i $KEY_PATH ubuntu@"$PRIVATE_IP" "grep -v '$OLD_KEY' ~/.ssh/authorized_keys > ~/.ssh/authorized_keys.tmp && mv ~/.ssh/authorized_keys.tmp ~/.ssh/authorized_keys"
+
