@@ -6,6 +6,7 @@ if [ $# -ne 1 ]; then
     exit 5
 fi
 
+
 PRIVATE_IP=$1
 NEW_KEY_NAME="RotatedKey"
 KEY_PATH2=$HOME/.ssh/SRubinKeyPrivate.pem
