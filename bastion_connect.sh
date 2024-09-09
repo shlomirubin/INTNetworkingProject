@@ -33,4 +33,5 @@ if [ $# -ge 2 ]; then
     ssh -i "$KEY_PATH" ubuntu@"$PUBLIC_IP" "ssh -i /home/ubuntu/.ssh/SRubinKeyPrivate.pem" ubuntu@"$PRIVATE_IP" "$@"
   fi
   exit $?
+
 fi
