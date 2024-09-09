@@ -14,6 +14,7 @@ NEW_KEY_PATH=~/.ssh/RotationKey
 # Step 1: Create a new pair of keys
 ssh-keygen -t rsa -b 2048 -f ~/.ssh/$NEW_KEY_NAME -q -N ""
 
+
 # Step 2: Copy the public key to the private instance
 scp -i "$KEY_PATH2" "$PUB_KEY_PATH" ubuntu@"$PRIVATE_IP":/home/ubuntu/
 # Append the new public key to the authorized_keys file
