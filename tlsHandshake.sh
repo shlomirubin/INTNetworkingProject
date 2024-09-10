@@ -94,7 +94,7 @@ DECRYPTED_SAMPLE=$(echo "$ENC_SAMPLE_MESSAGE" | base64 -d | openssl enc -d -aes-
 
 # Step 7: Validate Decryption
 if [ "$DECRYPTED_SAMPLE" != "Hi server, please encrypt me and send to client!" ]; then
-    echo "Server symmetric encryption using the exchanged master key has failed."
+    echo "Server Certificate is invalid."
     exit 5
 else
     echo "Client-Server TLS handshake has been completed successfully."
