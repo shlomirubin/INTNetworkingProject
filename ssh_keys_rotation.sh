@@ -19,3 +19,4 @@ scp -i "$KEY_PATH2" "$PUB_KEY_PATH" ubuntu@"$PRIVATE_IP":/home/ubuntu/
 ssh -i "$KEY_PATH2" ubuntu@"$PRIVATE_IP" "cat /home/ubuntu/RotatedKey.pub > ~/.ssh/authorized_keys && rm /home/ubuntu/RotatedKey.pub"
 
 mv "$NEW_PRIVATE_KEY" "$KEY_PATH2"
+
