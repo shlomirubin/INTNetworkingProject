@@ -19,3 +19,4 @@ ssh -i "$KEY_PATH2" ubuntu@"$PRIVATE_IP" "cat /home/ubuntu/RotatedKey.pub > ~/.s
 
 mv "$NEW_KEY_NAME" "$KEY_PATH2"
 
+
