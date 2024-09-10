@@ -99,3 +99,4 @@ if [ "$DECRYPTED_SAMPLE" != "Hi server, please encrypt me and send to client!" ]
 else
     echo "Client-Server TLS handshake has been completed successfully."
 fi
+
